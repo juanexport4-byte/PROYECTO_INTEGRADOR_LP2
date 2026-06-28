@@ -31,14 +31,14 @@ class ScraperHiringCafe:
         except requests.exceptions.RequestException as e:
             print(f"Error al obtener datos: {e}")
             return None
-        
-def guardar_json(self, datos, nombre="datos/crudos/ofertas_hiringcafe.json"):
-    """
-    Guarda los datos obtenidos en un archivo JSON.
-    """
-    os.makedirs(os.path.dirname(nombre), exist_ok=True)
 
-    with open(nombre, "w", encoding="utf-8") as archivo:
-        json.dump(datos, archivo, ensure_ascii=False, indent=4)
+    def guardar_json(self, datos, nombre="datos/crudos/ofertas_hiringcafe.json"):
+        """
+        Guarda los datos obtenidos en un archivo JSON.
+        """
+        os.makedirs(os.path.dirname(nombre), exist_ok=True)
 
-    print(f"Datos guardados en: {nombre}")
+        with open(nombre, "w", encoding="utf-8") as archivo:
+            json.dump(datos, archivo, ensure_ascii=False, indent=4)
+
+        print(f"Datos guardados en: {nombre}")
