@@ -106,3 +106,18 @@ class ProcesadorDatos:
         print(f"   → Datos limpios: {len(self.df)} registros")
         print("LIMPIEZA COMPLETADA")
         return self.df
+        
+    def guardar_csv(self, nombre="datos/procesados/ofertas_limpias.csv"):
+        """
+        Guarda el DataFrame limpio en un archivo CSV
+        """
+        if self.df.empty:
+            print("No hay datos para guardar")
+            return
+        
+        # Crear la carpeta si no existe
+        os.makedirs(os.path.dirname(nombre), exist_ok=True)
+        
+        self.df.to_csv(nombre, index=False, encoding='utf-8-sig')
+        print(f"Datos guardados en: {nombre}")
+        print(f" Total de registros: {len(self.df)}")
