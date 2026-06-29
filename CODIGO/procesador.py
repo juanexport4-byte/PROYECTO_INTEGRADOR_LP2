@@ -14,7 +14,7 @@ class ProcesadorDatos:
         self.ruta_json = archivo_json
         self.df = None
         self._cargar_datos()
-        
+
     def _cargar_datos(self):
         """
         Carga el archivo JSON y lo convierte a DataFrame de pandas
@@ -33,3 +33,76 @@ class ProcesadorDatos:
             print("   Asegúrate de haber ejecutado primero el scraper")
             self.df = pd.DataFrame()
             return self.df
+
+    def limpiar_datos(self):
+        """
+        Realiza la limpieza completa del dataset
+        """
+        if self.df.empty:
+            print("No hay datos para limpiar")
+            return self.df
+        
+        print("\nINICIANDO LIMPIEZA DE DATOS")
+        print("=" * 40)
+        
+        # 1. Eliminar duplicados
+        registros_antes = len(self.df)
+        self.df = self.df.drop_duplicates(subset=['title', 'companyName'])
+        print(f"   → Duplicados eliminados: {registros_antes - len(self.df)}")
+        
+        # 2. Manejar valores nulos
+        self.df['description'] = self.df['description'].fillna('')
+        self.df['minSalary'] = self.df['minSalary'].fillna(0)
+        self.df['maxSalary'] = self.df['maxSalary'].fillna(0)
+        self.df['currency'] = self.df['currency'].fillna('No especificado')
+        self.df['employmentType'] = self.df['employmentType'].fillna('No especificado')
+        
+        # 3. Limpiar descripciones (eliminar HTML)
+        self.df['description'] = self.df['description'].str.replace(r'<[^<>]*>', '', regex=True)
+        self.df['description'] = self.df['description'].str.replace(r'\s+', ' ', regex=True)
+        self.df['description'] = self.df['description'].str.strip()
+        
+        # 4. Convertir fechas
+        self.df['pubDate'] = pd.to_datetime(self.df['pubDate'], unit='ms')
+        
+        # 5. Extraer ubicaciones
+        if 'locationRestrictions' in self.df.columns:
+            self.df['ubicacion'] = self.df['locationRestrictions'].apply(
+                lambda x: ', '.join(x) if isinstance(x, list) and x else 'Global'
+            )
+        else:
+            self.df['ubicacion'] = 'Global'
+        
+        # 6. Extraer seniority
+        if 'seniority' in self.df.columns:
+            self.df['seniority'] = self.df['seniority'].apply(
+                lambda x: ', '.join(x) if isinstance(x, list) and x else 'No especificado'
+            )
+        else:
+            self.df['seniority'] = 'No especificado'
+        
+        # 7. Crear rango salarial formateado
+        self.df['rango_salarial'] = self.df.apply(
+            lambda row: f"{row['minSalary']} - {row['maxSalary']} {row['currency']}" 
+            if row['minSalary'] > 0 and row['maxSalary'] > 0 else 'No especificado',
+            axis=1
+        )
+        
+        # 8. Crear salario promedio
+        self.df['salario_promedio'] = self.df.apply(
+            lambda row: (row['minSalary'] + row['maxSalary']) / 2
+            if row['minSalary'] > 0 and row['maxSalary'] > 0 else None,
+            axis=1
+        )
+        
+        # 9. Tipo de empleo simplificado
+        self.df['tipo_empleo_simple'] = self.df['employmentType'].apply(
+            lambda x: 'Full Time' if 'full' in x.lower() else 
+                     'Part Time' if 'part' in x.lower() else 
+                     'Contract' if 'contract' in x.lower() else 
+                     'Freelance' if 'freelance' in x.lower() else 'Otro'
+        )
+        
+        print(f"   → Datos limpios: {len(self.df)} registros")
+        print("LIMPIEZA COMPLETADA")
+        return self.df
