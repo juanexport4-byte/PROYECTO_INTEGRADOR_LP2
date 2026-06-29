@@ -35,7 +35,7 @@ class ExtractorRegex:
             print(" Verifica que hayas ejecutado primero el procesador")
             self.df = pd.DataFrame()
             return self.df
-        
+     # ========== MÉTODOS DE EXTRACCIÓN CON REGEX ==========
     def extraer_tecnologias(self, texto):
         """
         Extrae tecnologías mencionadas en el texto 
@@ -156,3 +156,104 @@ class ExtractorRegex:
             return f"{match.group(1)}+ años"  # X+ años
         
         return None
+    
+    # ========== MÉTODO PRINCIPAL ==========
+
+    def procesar_dataset(self):
+        """
+        Aplica todas las extracciones al dataset y agrega nuevas columnas
+        """
+        if self.df.empty:
+            print("No hay datos para procesar")
+            return self.df
+        
+        print("\nEXTRACCIÓN CON EXPRESIONES REGULARES")
+        print("=" * 50)
+        
+        # Aplicar cada extracción a la columna 'description'
+        print("   Extrayendo tecnologías...")
+        self.df['tecnologias'] = self.df['description'].apply(self.extraer_tecnologias)
+        
+        print("   Extrayendo salarios mencionados...")
+        self.df['salario_mencionado'] = self.df['description'].apply(self.extraer_salario_texto)
+        
+        print("   Extrayendo modalidad de trabajo...")
+        self.df['modalidad'] = self.df['description'].apply(self.extraer_modalidad)
+        
+        print("   Extrayendo nivel de experiencia...")
+        self.df['nivel_experiencia'] = self.df['description'].apply(self.extraer_nivel_experiencia)
+        
+        print("   Extrayendo años de experiencia...")
+        self.df['anos_experiencia'] = self.df['description'].apply(self.extraer_años_experiencia)
+        
+        # Contar cuántas ofertas tienen cada extracción
+        print("\nRESULTADOS DE EXTRACCIÓN:")
+        print(f"   - Ofertas con tecnologías: {self.df['tecnologias'].apply(len).gt(0).sum()}")
+        print(f"   - Ofertas con salario mencionado: {self.df['salario_mencionado'].notna().sum()}")
+        print(f"   - Ofertas con modalidad: {self.df['modalidad'].ne('No especificado').sum()}")
+        print(f"   - Ofertas con nivel experiencia: {self.df['nivel_experiencia'].ne('No especificado').sum()}")
+        print(f"   - Ofertas con años experiencia: {self.df['anos_experiencia'].notna().sum()}")
+        
+        print("\nEXTRACCIÓN COMPLETADA")
+        return self.df
+    
+    def guardar_csv(self, nombre="datos/procesados/ofertas_con_regex.csv"):
+        """
+        Guarda el dataset con las nuevas columnas
+        """
+        if self.df.empty:
+            print("No hay datos para guardar")
+            return
+        
+        # Crear la carpeta si no existe
+        os.makedirs(os.path.dirname(nombre), exist_ok=True)
+        
+        self.df.to_csv(nombre, index=False, encoding='utf-8-sig')
+        print(f"Datos guardados en: {nombre}")
+        print(f" Total de registros: {len(self.df)}")
+        print(f" Nuevas columnas agregadas: tecnologias, salario_mencionado, modalidad, nivel_experiencia, anos_experiencia")
+    
+    def mostrar_ejemplos(self):
+        """
+        Muestra ejemplos de extracción para verificar que funciona
+        """
+        if self.df.empty:
+            print("No hay datos para mostrar")
+            return
+        
+        print("\nEJEMPLOS DE EXTRACCIÓN")
+        print("=" * 60)
+        
+        # Tomar 3 ofertas con descripción larga
+        ejemplos = self.df[self.df['description'].str.len() > 100].head(3)
+        
+        for idx, row in ejemplos.iterrows():
+            print(f"\n {row['title']} - {row['companyName']}")
+            print(f"Ubicación: {row['ubicacion']}")
+            print(f"Modalidad: {row['modalidad']}")
+            print(f"Tecnologías: {', '.join(row['tecnologias']) if row['tecnologias'] else 'No especificadas'}")
+            print(f"Salario mencionado: {row['salario_mencionado'] or 'No especificado'}")
+            print(f"Nivel: {row['nivel_experiencia']}")
+            print(f" Experiencia: {row['anos_experiencia'] or 'No especificado'}")
+            print("-" * 40)
+
+
+    def ejecutar_extraccion(self):
+        """
+        Método principal que ejecuta todo el flujo de extracción 
+        """
+        print("INICIANDO EXTRACCIÓN CON REGEX")
+        print("=" * 50)
+        
+        self.procesar_dataset()
+        self.guardar_csv()
+        self.mostrar_ejemplos()
+        
+        print("\nEXTRACCIÓN COMPLETADA EXITOSAMENTE")
+        return self.df
+
+
+# --- EJECUCIÓN ---
+if __name__ == "__main__":
+    extractor = ExtractorRegex("datos/procesados/ofertas_limpias.csv")
+    df_enriquecido = extractor.ejecutar_extraccion()
