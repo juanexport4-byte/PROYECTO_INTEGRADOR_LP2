@@ -83,3 +83,53 @@ class ExtractorRegex:
                 return f"${match.group(1)} - ${match.group(2)}"
         
         return None
+    
+    def extraer_modalidad(self, texto):
+        """
+        Extrae la modalidad de trabajo del texto 
+        
+        Args:
+            texto (str): Texto de la descripción
+            
+        Returns:
+            str: Modalidad encontrada o 'No especificado'
+        """
+        if not isinstance(texto, str) or pd.isna(texto):
+            return 'No especificado'
+        
+        # Patrón para buscar modalidades
+        patron = r'\b(Remote|Hybrid|Onsite|Presencial|Remoto|Híbrido|Hibrido|Home Office|Teletrabajo)\b'
+        
+        match = re.search(patron, texto, re.IGNORECASE)
+        if match:
+            # Convertir a formato consistente
+            modalidad = match.group(1).lower()
+            if modalidad in ['remote', 'remoto', 'home office', 'teletrabajo']:
+                return 'Remoto'
+            elif modalidad in ['hybrid', 'híbrido', 'hibrido']:
+                return 'Híbrido'
+            elif modalidad in ['onsite', 'presencial']:
+                return 'Presencial'
+        
+        return 'No especificado'
+    
+    def extraer_nivel_experiencia(self, texto):
+        """
+        Extrae el nivel de experiencia requerido 
+        
+        Args:
+            texto (str): Texto de la descripción
+            
+        Returns:
+            str: Nivel de experiencia o 'No especificado'
+        """
+        if not isinstance(texto, str) or pd.isna(texto):
+            return 'No especificado'
+        
+        patron = r'\b(Senior|Junior|Entry Level|Mid-Level|Lead|Principal|Staff|Intern|Trainee|Associate)\b'
+        
+        match = re.search(patron, texto, re.IGNORECASE)
+        if match:
+            return match.group(1).title()
+        
+        return 'No especificado'
