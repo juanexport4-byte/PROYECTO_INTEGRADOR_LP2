@@ -106,7 +106,7 @@ class ProcesadorDatos:
         print(f"   → Datos limpios: {len(self.df)} registros")
         print("LIMPIEZA COMPLETADA")
         return self.df
-        
+
     def guardar_csv(self, nombre="datos/procesados/ofertas_limpias.csv"):
         """
         Guarda el DataFrame limpio en un archivo CSV
@@ -121,3 +121,31 @@ class ProcesadorDatos:
         self.df.to_csv(nombre, index=False, encoding='utf-8-sig')
         print(f"Datos guardados en: {nombre}")
         print(f" Total de registros: {len(self.df)}")
+        
+    def mostrar_resumen(self):
+        """
+        Muestra un resumen estadístico del dataset
+        """
+        if self.df.empty:
+            print("No hay datos para mostrar")
+            return
+        
+        print("\n" + "=" * 50)
+        print("RESUMEN DEL DATASET")
+        print("=" * 50)
+        
+        print(f"📌 Total de ofertas: {len(self.df)}")
+        print(f"📌 Columnas: {len(self.df.columns)}")
+        
+        print("\nTipos de empleo:")
+        print(self.df['tipo_empleo_simple'].value_counts())
+        
+        print("\nTop 5 empresas con más ofertas:")
+        print(self.df['companyName'].value_counts().head())
+        
+        salarios_validos = self.df[self.df['salario_promedio'].notna()]
+        if not salarios_validos.empty:
+            print(f"\n Salarios promedio:")
+            print(f"   Mínimo: ${salarios_validos['salario_promedio'].min():,.0f}")
+            print(f"   Promedio: ${salarios_validos['salario_promedio'].mean():,.0f}")
+            print(f"   Máximo: ${salarios_validos['salario_promedio'].max():,.0f}")
