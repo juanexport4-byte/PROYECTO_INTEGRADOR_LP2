@@ -121,7 +121,7 @@ class ProcesadorDatos:
         self.df.to_csv(nombre, index=False, encoding='utf-8-sig')
         print(f"Datos guardados en: {nombre}")
         print(f" Total de registros: {len(self.df)}")
-        
+
     def mostrar_resumen(self):
         """
         Muestra un resumen estadístico del dataset
@@ -149,3 +149,22 @@ class ProcesadorDatos:
             print(f"   Mínimo: ${salarios_validos['salario_promedio'].min():,.0f}")
             print(f"   Promedio: ${salarios_validos['salario_promedio'].mean():,.0f}")
             print(f"   Máximo: ${salarios_validos['salario_promedio'].max():,.0f}")
+
+    def ejecutar_procesamiento(self):
+        """
+        Método principal que ejecuta todo el flujo de procesamiento
+        """
+        print("INICIANDO PROCESAMIENTO DE DATOS")
+        print("=" * 50)
+        
+        self.limpiar_datos()
+        self.guardar_csv()
+        self.mostrar_resumen()
+        
+        print("\nPROCESAMIENTO COMPLETADO EXITOSAMENTE")
+        return self.df
+
+
+if __name__ == "__main__":
+    procesador = ProcesadorDatos("datos/crudos/ofertas_hiringcafe.json")
+    df_limpio = procesador.ejecutar_procesamiento()
