@@ -14,3 +14,22 @@ class ProcesadorDatos:
         self.ruta_json = archivo_json
         self.df = None
         self._cargar_datos()
+        
+    def _cargar_datos(self):
+        """
+        Carga el archivo JSON y lo convierte a DataFrame de pandas
+        Método interno (empieza con _)
+        """
+        try:
+            with open(self.ruta_json, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            self.df = pd.DataFrame(data)
+            print(f"Datos cargados correctamente: {len(self.df)} ofertas")
+            print(f"   Columnas disponibles: {list(self.df.columns)}")
+            return self.df
+        except FileNotFoundError:
+            print(f"ERROR: No se encontró el archivo: {self.ruta_json}")
+            print("   Asegúrate de haber ejecutado primero el scraper")
+            self.df = pd.DataFrame()
+            return self.df
