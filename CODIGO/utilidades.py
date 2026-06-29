@@ -133,3 +133,26 @@ class ExtractorRegex:
             return match.group(1).title()
         
         return 'No especificado'
+    
+    def extraer_años_experiencia(self, texto):
+        """
+        Extrae los años de experiencia requeridos usando regex
+        
+        Args:
+            texto (str): Texto de la descripción
+            
+        Returns:
+            str: Años de experiencia o None
+        """
+        if not isinstance(texto, str) or pd.isna(texto):
+            return None
+        
+        patron = r'(\d+)\+?\s*(?:-?\s*(\d+))?\s*(?:years|años|yr|yrs)'
+        
+        match = re.search(patron, texto, re.IGNORECASE)
+        if match:
+            if match.group(2):  # Rango: X-Y años
+                return f"{match.group(1)}-{match.group(2)} años"
+            return f"{match.group(1)}+ años"  # X+ años
+        
+        return None
