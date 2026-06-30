@@ -103,11 +103,12 @@ proyecto-integrador-lp2/
 ├── requirements.txt # Librerías necesarias para ejecutar
 ├── README.md # Documentación del proyecto (este archivo)
 └── .gitignore # Archivos ignorados por Git
-
+```
 
 
 ### Explicación detallada de lo que contiene cada carpeta
 
+```
 | Carpeta | Propósito | ¿Qué archivos contiene? |
 |---------|-----------|------------------------|
 | **`codigo/`** | Código fuente de Python | 4 archivos `.py` con las clases del proyecto |
@@ -131,7 +132,7 @@ proyecto-integrador-lp2/
 ```
 ---
 
-## 🛠️ Instalación y Configuración
+## Instalación y Configuración
 
 ### Requisitos previos
 
