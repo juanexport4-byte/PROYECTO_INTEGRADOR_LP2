@@ -35,8 +35,7 @@ En el mercado laboral actual, existe una gran cantidad de información dispersa 
 
 ---
 
-## 🔄 Pipeline del Proyecto
-## 🔄 Pipeline del Proyecto
+## Pipeline del Proyecto
 
 El proyecto sigue un flujo de procesamiento de datos en 5 etapas:
 ┌─────────────────────────────────────────────────────────────────────┐
