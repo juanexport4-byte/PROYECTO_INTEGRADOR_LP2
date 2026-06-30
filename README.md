@@ -73,6 +73,7 @@ El proyecto sigue un flujo de procesamiento de datos en 5 etapas:
 
 ## Estructura del Proyecto
 
+```
 proyecto-integrador-lp2/
 │
 ├── codigo/ # Código fuente (archivos .py)
@@ -127,7 +128,7 @@ proyecto-integrador-lp2/
 | `modalidad` | Regex | Remoto, Híbrido, Presencial o No especificado |
 | `nivel_experiencia` | Regex | Senior, Junior, Mid-Level, etc. |
 | `anos_experiencia` | Regex | Años de experiencia requeridos (ej: "5+ años") |
-
+```
 ---
 
 ## 🛠️ Instalación y Configuración
