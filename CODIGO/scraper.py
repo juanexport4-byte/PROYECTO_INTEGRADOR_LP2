@@ -5,7 +5,7 @@ import time
 import os
 
 
-class ScraperHiringCafe:
+class ScraperHimalayas:
     """
     Clase para extraer ofertas de trabajo de Himalayas.app vía API.
     """
@@ -32,7 +32,7 @@ class ScraperHiringCafe:
             print(f"Error al obtener datos: {e}")
             return None
 
-    def guardar_json(self, datos, nombre="datos/crudos/ofertas_hiringcafe.json"):
+    def guardar_json(self, datos, nombre="datos/crudos/ofertas_himalayas.json"):
         """
         Guarda los datos obtenidos en un archivo JSON.
         """
@@ -83,7 +83,7 @@ class ScraperHiringCafe:
 
 if __name__ == "__main__":
 
-    scraper = ScraperHiringCafe()
+    scraper = ScraperHimalayas()
 
     ofertas = scraper.ejecutar_scraping(max_ofertas=100)
 
