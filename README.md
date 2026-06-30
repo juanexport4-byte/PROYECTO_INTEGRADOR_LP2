@@ -37,28 +37,17 @@ En el mercado laboral actual, existe una gran cantidad de información dispersa 
 
 ## Pipeline del Proyecto
 
-```
-El proyecto sigue un flujo de procesamiento de datos en 5 etapas:
-┌─────────────────────────────────────────────────────────────────────┐
-│ PIPELINE DE DATOS │
-├─────────────────────────────────────────────────────────────────────┤
-│ │
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
-│ │ SCRAPER │ → │ LIMPIEZA │ → │ REGEX │ → │ GRÁFICOS │ │
-│ │ (API) │ │ (PANDAS) │ │(EXTRACCIÓN) │(VISUALIZAR) │
-│ └──────────┘ └──────────┘ └──────────┘ └──────────┘ │
-│ ↓ ↓ ↓ ↓ │
-│ datos/crudos/ datos/procesados/ datos/procesados/ graficos/ │
-│ ofertas_ ofertas_limpias.csv ofertas_con_regex.csv *.png │
-│ hiringcafe.json │
-│ │
-│ ↓ │
-│ ┌──────────────────┐ │
-│ │ NOTEBOOK │ │
-│ │ (ANÁLISIS FINAL) │ │
-│ └──────────────────┘ │
-│ │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    A["Scraper(API)"] --> B["Limpieza(Pandas)"]
+    B --> C["Regex(Extracción)"]
+    C --> D["Gráficos(Visualización)"]
+    D --> E["Notebook(Análisis final)"]
+
+    A -.-> A1[("datos/crudos/ofertas_hiringcafe.json")]
+    B -.-> B1[("datos/procesados/ofertas_limpias.csv")]
+    C -.-> C1[("datos/procesados/ofertas_con_regex.csv")]
+    D -.-> D1[("graficos/*.png")]
 ```
 
 ### Explicación de cada etapa:
@@ -110,7 +99,6 @@ proyecto-integrador-lp2/
 
 ### Explicación detallada de lo que contiene cada carpeta
 
-```
 | Carpeta | Propósito | ¿Qué archivos contiene? |
 |---------|-----------|------------------------|
 | **`codigo/`** | Código fuente de Python | 4 archivos `.py` con las clases del proyecto |
@@ -118,11 +106,10 @@ proyecto-integrador-lp2/
 | **`datos/procesados/`** | Datos procesados | CSVs limpios y enriquecidos con nuevas columnas |
 | **`graficos/`** | Visualizaciones | 5 imágenes PNG generadas automáticamente |
 | **`cuadernos/`** | Análisis interactivo | 1 Jupyter Notebook con el análisis final |
-```
+
 
 ### Nuevas columnas agregadas en el procesamiento:
 
-```
 | Columna | Origen | Descripción |
 |---------|--------|-------------|
 | `rango_salarial` | Procesador | Rango salarial formateado (ej: "80000 - 120000 USD") |
@@ -133,4 +120,4 @@ proyecto-integrador-lp2/
 | `modalidad` | Regex | Remoto, Híbrido, Presencial o No especificado |
 | `nivel_experiencia` | Regex | Senior, Junior, Mid-Level, etc. |
 | `anos_experiencia` | Regex | Años de experiencia requeridos (ej: "5+ años") |
-```
+
