@@ -122,6 +122,7 @@ proyecto-integrador-lp2/
 
 ### Nuevas columnas agregadas en el procesamiento:
 
+```
 | Columna | Origen | Descripción |
 |---------|--------|-------------|
 | `rango_salarial` | Procesador | Rango salarial formateado (ej: "80000 - 120000 USD") |
@@ -133,18 +134,3 @@ proyecto-integrador-lp2/
 | `nivel_experiencia` | Regex | Senior, Junior, Mid-Level, etc. |
 | `anos_experiencia` | Regex | Años de experiencia requeridos (ej: "5+ años") |
 ```
----
-
-## Instalación y Configuración
-
-### Requisitos previos
-
-- Python 3.8 o superior
-- Pip (administrador de paquetes de Python)
-- Git (para clonar el repositorio)
-
-### Paso 1: Clonar el repositorio
-
-```bash
-git clone https://github.com/tu-usuario/proyecto-integrador-lp2.git
-cd proyecto-integrador-lp2
