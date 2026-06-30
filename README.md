@@ -37,6 +37,7 @@ En el mercado laboral actual, existe una gran cantidad de información dispersa 
 
 ## Pipeline del Proyecto
 
+```
 El proyecto sigue un flujo de procesamiento de datos en 5 etapas:
 ┌─────────────────────────────────────────────────────────────────────┐
 │ PIPELINE DE DATOS │
@@ -58,6 +59,7 @@ El proyecto sigue un flujo de procesamiento de datos en 5 etapas:
 │ └──────────────────┘ │
 │ │
 └─────────────────────────────────────────────────────────────────────┘
+```
 
 ### Explicación de cada etapa:
 
@@ -116,6 +118,7 @@ proyecto-integrador-lp2/
 | **`datos/procesados/`** | Datos procesados | CSVs limpios y enriquecidos con nuevas columnas |
 | **`graficos/`** | Visualizaciones | 5 imágenes PNG generadas automáticamente |
 | **`cuadernos/`** | Análisis interactivo | 1 Jupyter Notebook con el análisis final |
+```
 
 ### Nuevas columnas agregadas en el procesamiento:
 
