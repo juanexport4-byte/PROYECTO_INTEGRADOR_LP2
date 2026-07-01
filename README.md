@@ -1,5 +1,5 @@
 # Proyecto integrador - LENGUAJE DE PROGRAMACIÓN II - GRUPO D
-
+# LINK DEL VIDEO DE EXPOSICIÓN AL FINAL DEL README
 ## 👥 Integrantes del Grupo
 * **20241372	Aguilar Farfán, Juan Fernando** - [@juanexport4-byte](https://github.com/juanexport4-byte)
 * **20241384	Guevara Alvarado, Samuel Christian** - [@chrissg05](https://github.com/chrissg05)
