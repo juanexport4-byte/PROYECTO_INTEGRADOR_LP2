@@ -1,4 +1,4 @@
-# Proyecto integrador
+# Proyecto integrador - LENGUAJE DE PROGRAMACIÓN II - GRUPO D
 
 ## 👥 Integrantes del Grupo
 * **20241372	Aguilar Farfán, Juan Fernando** - [@juanexport4-byte](https://github.com/juanexport4-byte)
@@ -121,3 +121,4 @@ proyecto-integrador-lp2/
 | `nivel_experiencia` | Regex | Senior, Junior, Mid-Level, etc. |
 | `anos_experiencia` | Regex | Años de experiencia requeridos (ej: "5+ años") |
 
+🔗 [Ver video exposición](https://drive.google.com/file/d/1iJkSW6FXTh67KQ0V6BaBv3TfkmVf0Hg1/view?usp=sharing)
